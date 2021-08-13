@@ -388,6 +388,24 @@ void getEignValues(double** matrixA,double* EignValues, int n)
         EignValues[i] = matrixA[i][i];
     }
 }
+void calculateSPK(double** observations, int n, int dim, int k)
+{
+    double **weightedAdjMatrix, **Lnorm, **DiagonalDegreeMatrix, **EignVectorsMatrix,**matrixNewPointsToKmeans, *EignValues;
+    weightedAdjMatrix = CreateWeightedAdjacencyMatrix(observations,dim,n);
+    Lnorm = ComputeNormalizedGraphLaplacian(weightedAdjMatrix,DiagonalDegreeMatrix,n);
+    JacobiAlgorithm(Lnorm,EignVectorsMatrix,n);
+    if(k==0)
+    {
+        EignValues = calloc(n,sizeof(double));
+        getEignValues(Lnorm,EignValues,n);
+        k = TheEigengapHeuristic(EignValues,n);
+        free(EignValues);
+    }
+    getMatrixSortedEignVectors(Lnorm,EignVectorsMatrix,matrixNewPointsToKmeans,n,k);
+    normalizedMatrixUtoMatrixT(matrixNewPointsToKmeans,n,k);
+
+}
+
 int main(int argc, char *argv[])
 {
     testJacobi();
