@@ -272,7 +272,6 @@ void copyMatrix(double** matrixSource, double** matrixDest, int n)
 
 void JacobiAlgorithm(double** matrixA,double** matrixV, int n)
 {
-
     double **matrixAtag, **matrixP, **matrixNewV, c, s,offA , offAtag, epsilon = 0.001;
     int maxElementOffDiagonalI, maxElementOffDiagonalJ,i,j, stopCondition=1;
     EignValue *eignValues;
@@ -381,6 +380,14 @@ void normalizedMatrixUtoMatrixT(double** matrixU,int n, int k)
     }
 }
 
+void getEignValues(double** matrixA,double* EignValues, int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        EignValues[i] = matrixA[i][i];
+    }
+}
 int main(int argc, char *argv[])
 {
     testJacobi();
