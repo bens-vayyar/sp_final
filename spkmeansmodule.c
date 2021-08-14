@@ -384,7 +384,7 @@ void normalizedMatrixUtoMatrixT(double** matrixU,int n, int k)
 int main(int argc, char *argv[])
 {
     testJacobi();
-    testJacobi2();
+    testJacobi3();
     return 0;
 }
 
